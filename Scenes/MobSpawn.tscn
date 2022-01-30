@@ -1,0 +1,59 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Scripts/MobSpawn.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Mob.tscn" type="PackedScene" id=2]
+
+[sub_resource type="CylinderMesh" id=3]
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_color = Color( 1, 0, 1, 1 )
+
+[sub_resource type="Curve3D" id=5]
+_data = {
+"points": PoolVector3Array( 0, 0, 0, 0, 0, 0, -13, 0, -15, 0, 0, 0, 0, 0, 0, 13, 0, -15, 0, 0, 0, 0, 0, 0, 13, 0, 16, 0, 0, 0, 0, 0, 0, -13, 0, 16, 0, 0, 0, 0, 0, 0, -13, 0, -15 ),
+"tilts": PoolRealArray( 0, 0, 0, 0, 0 )
+}
+
+[node name="MobSpawn" type="Spatial"]
+script = ExtResource( 1 )
+__meta__ = {
+"_editor_description_": "Spawn location for our mobs."
+}
+mob_scene = ExtResource( 2 )
+
+[node name="Cylinders" type="Spatial" parent="."]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Cylinders"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, -15 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="Cylinders"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, 16 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="MeshInstance3" type="MeshInstance" parent="Cylinders"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -15 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="MeshInstance4" type="MeshInstance" parent="Cylinders"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, 16 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="SpawnPath" type="Path" parent="."]
+curve = SubResource( 5 )
+
+[node name="SpawnLocation" type="PathFollow" parent="SpawnPath"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, -15 )
+
+[node name="MobTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[connection signal="timeout" from="MobTimer" to="." method="_on_MobTimer_timeout"]
