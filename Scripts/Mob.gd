@@ -9,6 +9,9 @@ export var max_speed = 18
 
 var velocity = Vector3.ZERO
 
+# Emitted when the player jumped on the mob.
+signal squashed
+
 func initialise(player_position):
 	# We turn the mob so it looks at the player.
 	look_at(player_position, Vector3.UP)
@@ -23,10 +26,15 @@ func initialise(player_position):
 	velocity = velocity.rotated(Vector3.UP, rotation.y)
 
 
+func squash():
+	queue_free()
+
+
 func _physics_process(_delta):
 # warning-ignore:return_value_discarded
 	move_and_slide(velocity)
 
 
 func _on_VisibilityNotifier_screen_exited():
+	emit_signal("squashed")
 	queue_free()
