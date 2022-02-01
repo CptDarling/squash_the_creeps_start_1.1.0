@@ -13,7 +13,7 @@ func _on_MobTimer_timeout():
 	
 func create_mob():
 	# Create a mob instance
-	var mob = mob_scene.instance()
+	var mob = mob_scene.instance() as Mob
 	
 	# Choose a random location on the path.
 	spawnLocation.unit_offset = randf()

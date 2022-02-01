@@ -1,30 +1,15 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Main.gd" type="Script" id=2]
 [ext_resource path="res://Scenes/MobSpawn.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Debug/DebugFPS.gd" type="Script" id=4]
-
-[sub_resource type="BoxShape" id=1]
-extents = Vector3( 30, 1, 30 )
-
-[sub_resource type="CubeMesh" id=2]
-size = Vector3( 60, 2, 60 )
+[ext_resource path="res://Scenes/UserInterface.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Ground.tscn" type="PackedScene" id=5]
 
 [node name="Main" type="Node"]
 script = ExtResource( 2 )
 
-[node name="Ground" type="StaticBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
-collision_layer = 4
-collision_mask = 0
-
-[node name="CollisionShape" type="CollisionShape" parent="Ground"]
-shape = SubResource( 1 )
-
-[node name="MeshInstance" type="MeshInstance" parent="Ground"]
-mesh = SubResource( 2 )
-material/0 = null
+[node name="Ground" parent="." instance=ExtResource( 5 )]
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 19, 0 )
@@ -42,7 +27,7 @@ size = 19.0
 
 [node name="Mobs" parent="." instance=ExtResource( 3 )]
 
-[node name="DebugFPS" type="Node" parent="."]
-script = ExtResource( 4 )
+[node name="UserInterface" parent="." instance=ExtResource( 4 )]
 
+[connection signal="hit" from="Player" to="." method="_on_Player_hit"]
 [connection signal="spawn_mob" from="Mobs" to="." method="_on_Mobs_spawn_mob"]

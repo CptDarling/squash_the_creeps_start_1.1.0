@@ -27,6 +27,7 @@ func initialise(player_position):
 
 
 func squash():
+	emit_signal("squashed")
 	queue_free()
 
 
@@ -36,5 +37,4 @@ func _physics_process(_delta):
 
 
 func _on_VisibilityNotifier_screen_exited():
-	emit_signal("squashed")
 	queue_free()

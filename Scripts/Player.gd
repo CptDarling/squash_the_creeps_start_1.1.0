@@ -17,6 +17,9 @@ var velocity = Vector3.ZERO
 
 onready var pivot : Spatial = $Pivot
 
+# Emitted when the player is hit by a mob.
+signal hit
+
 func _physics_process(delta):
 	# We create a local variable to store the input direction.
 	var direction : Vector3 = Vector3.ZERO
@@ -59,3 +62,12 @@ func _physics_process(delta):
 				# If so, we squash it and bounce.
 				mob.squash()
 				velocity.y = bounce_impulse
+
+
+func die():
+	emit_signal("hit")
+	queue_free()
+
+
+func _on_MobDetector_body_entered(_body):
+	die()
