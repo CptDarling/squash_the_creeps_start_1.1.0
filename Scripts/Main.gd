@@ -10,6 +10,7 @@ func _ready():
 # warning-ignore:return_value_discarded
 		Stats.connect("update_high_score", self, "_on_Stats_update_high_score")
 	Stats.score = 0
+	Stats.games_played += 1
 
 
 func _on_Mobs_spawn_mob(mob : Mob):
